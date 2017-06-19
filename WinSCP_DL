@@ -1,5 +1,11 @@
 #!/bin/sh
 ############################ SUPERSCRIPT INSTALLER FOR WINSCP
+############################ WINE REQUIRED, Run as sudo in order to use APT and comment out block
+#clear
+#echo "Running Prerequisite Check"
+#apt-get install wine
+#echo "Prerequisite Check Complete"
+#########################
 clear
 ### Script to Download WinSCP from Host.
 #########################
