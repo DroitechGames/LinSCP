@@ -1,0 +1,170 @@
+#!/bin/sh
+############################ SUPERSCRIPT INSTALLER FOR WINSCP
+clear
+### Script to Download WinSCP from Host.
+#########################
+PROTOCOL="https://"
+HOST="winscp.net/"
+DIRECTORY="download/"
+##########################
+PACKAGE="WinSCP-"
+VERSION="5.9.5"
+TYPE="-Portable"
+CONTAINER=".zip"
+##########################
+WINDOWDIR="Windows"
+PORTABLEDIR="Portable"
+APPDIR="WinSCP"
+##########################
+hostURL=$(echo $PROTOCOL$HOST$DIRECTORY)
+## Create Host URL Dynamically
+packURL=$(echo $PACKAGE$VERSION$TYPE$CONTAINER)
+## Create package URL Dynamically.
+finalURL=$(echo $hostURL$packURL)
+#####################################
+## at home directory
+echo "------------------------------------------------------"
+echo ""
+ls
+echo ""
+echo "------------------------------------------------------"
+sleep 0.2
+echo "Creating Windows Directory..."
+sleep 0.2
+mkdir -p ./$WINDOWDIR
+sleep 0.2
+cd ./$WINDOWDIR
+sleep 0.2
+echo "------------------------------------------------------"
+####################
+sleep 0.2
+echo "Creating Portable Directory..."
+sleep 0.2
+mkdir -p ./$PORTABLEDIR
+sleep 0.2
+cd ./$PORTABLEDIR
+echo "------------------------------------------------------"
+###################
+echo "Creating Application Directory..."
+sleep 0.2
+mkdir -p ./$APPDIR
+sleep 0.2
+cd ./$APPDIR
+sleep 0.2
+echo "------------------------------------------------------"
+echo ""
+echo "Selecting Package for download: "$packURL
+echo ""
+echo "------------------------------------------------------"
+winSCPicon="https://www.thebrexiter.co.uk/icons/win_scp.png"
+wget $finalURL
+mv ./$packURL ./WinSCP.zip
+sleep 0.2
+echo ""
+sleep 0.2
+wget $winSCPicon
+sleep 0.2
+echo ""
+sleep 0.2
+echo "------------------------------------------------------"
+sleep 0.2
+echo ""
+sleep 0.2
+echo "Renaming icon..."
+sleep 0.2
+mv ./win_scp.png ./icon.png
+sleep 0.2
+echo ""
+sleep 0.2
+echo "------------------------------------------------------"
+sleep 0.2
+echo "Package: "$packURL" - Has been downloaded."
+sleep 0.2
+echo "------------------------------------------------------"
+sleep 0.2
+echo "Starting Unzipping Archive: "$packURL
+sleep 0.2
+echo "------------------------------------------------------"
+sleep 0.2
+echo ""
+unzip ./WinSCP.zip
+echo ""
+sleep 0.2
+echo "------------------------------------------------------"
+sleep 0.2
+echo "Package has been unzipped and is ready for Secondary Configuration."
+sleep 0.2
+echo "------------------------------------------------------"
+sleep 0.2
+ls
+sleep 0.2
+echo "------------------------------------------------------"
+#### Create Secondary Configuration Files.
+DESKTOPFILE="/home/$USER/Desktop/LinSCP.desktop"
+PORTABLEFILE="/home/$USER/$WINDOWDIR/$PORTABLEDIR/LinSCP.xo"
+LAUNCHERFILE="/home/$USER/LinSCP.Launch"
+ICONFILE="/home/$USER/$WINDOWDIR/$PORTABLEDIR/icon.png"
+sleep 0.2
+## Create Executable File (Portable File)
+touch $PORTABLEFILE
+sleep 0.2
+chmod +x $PORTABLEFILE
+sleep 0.2
+echo "------------------------------------------------------"
+echo '#!/bin/bash' > "$PORTABLEFILE"
+echo 'echo "STARTING WINSCP (WINE)"' >> "$PORTABLEFILE"
+echo 'wine ./WinSCP.exe' >> "$PORTABLEFILE"
+echo 'echo "Program Finished"' >> "$PORTABLEFILE"
+sleep 0.2
+echo "------------------------------------------------------"
+echo ""
+cat $PORTABLEFILE
+echo ""
+echo "------------------------------------------------------"
+sleep 0.2
+## Create Executable File (Portable File)
+touch $LAUNCHERFILE
+sleep 0.2
+chmod +x $LAUNCHERFILE
+sleep 0.2
+echo '#!/bin/bash' > "$LAUNCHERFILE"
+echo 'Dir="./Windows/Portable"' >> "$LAUNCHERFILE"
+echo 'cd $Dir' >> "$LAUNCHERFILE"
+echo 'File="LinSCP.xo"' >> "$LAUNCHERFILE"
+echo ' . $File ' >> "$LAUNCHERFILE"
+sleep 0.2
+echo "------------------------------------------------------"
+echo ""
+cat $LAUNCHERFILE
+echo ""
+echo "------------------------------------------------------"
+sleep 0.2
+XArg="[Desktop Entry]"
+XPath="/home/$USER/"
+XCmt="The Original WinSCP"
+XName="LinSCP"
+XVer="$(echo $VERSION)"
+XType="Application"
+XTerm="false"
+XNotify="false"
+## Create Executable File (Portable File)
+touch $DESKTOPFILE
+sleep 0.2
+chmod +x $DESKTOPFILE
+sleep 0.2
+echo "$(echo $XArg)" > "$DESKTOPFILE"
+echo "Version=$(echo $XVer)" >> "$DESKTOPFILE"
+echo "Type=$(echo $XType)" >> "$DESKTOPFILE"
+echo "Name=$(echo $XName)" >> "$DESKTOPFILE"
+echo "Comment=$(echo $XCmt)" >> "$DESKTOPFILE"
+echo "Exec=$(echo $LAUNCHERFILE)" >> "$DESKTOPFILE"
+echo "Icon=$(echo $ICONFILE)" >> "$DESKTOPFILE"
+echo "Path=$(echo $XPath)" >> "$DESKTOPFILE"
+echo "Terminal=$(echo $XTerm)" >> "$DESKTOPFILE"
+echo "StartupNotify=$(echo $XNotify)" >> "$DESKTOPFILE"
+sleep 0.2
+echo "------------------------------------------------------"
+echo ""
+cat $DESKTOPFILE
+echo ""
+echo "------------------------------------------------------"
