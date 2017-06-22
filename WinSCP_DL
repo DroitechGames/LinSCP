@@ -1,14 +1,11 @@
 #!/bin/sh
 ############################ SUPERSCRIPT INSTALLER FOR WINSCP
-############################ WINE REQUIRED, Run as sudo in order to use APT and comment out block
-#clear
-#echo "Running Prerequisite Check"
-#apt-get install wine
-#echo "Prerequisite Check Complete"
-#########################
 clear
-### Script to Download WinSCP from Host.
+###Script to Download WinSCP from Host.
 #########################
+colorstart="$(tput setaf 2)"
+colorstart1="$(tput setaf 6)"
+colorstop="$(tput sgr0)"
 PROTOCOL="https://"
 HOST="winscp.net/"
 DIRECTORY="download/"
@@ -23,45 +20,49 @@ PORTABLEDIR="Portable"
 APPDIR="WinSCP"
 ##########################
 hostURL=$(echo $PROTOCOL$HOST$DIRECTORY)
+echo $colorstart1$hostURL$colorstop
 ## Create Host URL Dynamically
 packURL=$(echo $PACKAGE$VERSION$TYPE$CONTAINER)
+echo $colorstart1$packURL$colorstop
 ## Create package URL Dynamically.
 finalURL=$(echo $hostURL$packURL)
+echo $colorstart1$finalURL$colorstop
 #####################################
 ## at home directory
-echo "------------------------------------------------------"
+echo $colorstart"------------------------------------------------------"
 echo ""
 ls
 echo ""
-echo "------------------------------------------------------"
+echo $colorstart "------------------------------------------------------"
 sleep 0.2
-echo "Creating Windows Directory..."
+echo $colorstart "Creating Windows Directory..."
 sleep 0.2
 mkdir -p ./$WINDOWDIR
 sleep 0.2
 cd ./$WINDOWDIR
 sleep 0.2
-echo "------------------------------------------------------"
+echo $colorstart "------------------------------------------------------"
 ####################
 sleep 0.2
-echo "Creating Portable Directory..."
+echo $colorstart "Creating Portable Directory..."
 sleep 0.2
 mkdir -p ./$PORTABLEDIR
 sleep 0.2
 cd ./$PORTABLEDIR
-echo "------------------------------------------------------"
+sleep 0.2
+echo $colorstart "------------------------------------------------------"
 ###################
-echo "Creating Application Directory..."
+echo $colorstart "Creating Application Directory..."
 sleep 0.2
 mkdir -p ./$APPDIR
 sleep 0.2
 cd ./$APPDIR
 sleep 0.2
-echo "------------------------------------------------------"
+echo $colorstart "------------------------------------------------------"
 echo ""
-echo "Selecting Package for download: "$packURL
+echo $colorstart "Selecting Package for download: "$packURL
 echo ""
-echo "------------------------------------------------------"
+echo $colorstart "------------------------------------------------------"
 winSCPicon="https://www.thebrexiter.co.uk/icons/win_scp.png"
 wget $finalURL
 mv ./$packURL ./WinSCP.zip
@@ -72,11 +73,11 @@ wget $winSCPicon
 sleep 0.2
 echo ""
 sleep 0.2
-echo "------------------------------------------------------"
+echo $colorstart "------------------------------------------------------"
 sleep 0.2
 echo ""
 sleep 0.2
-echo "Renaming icon..."
+echo $colorstart "Renaming icon..."
 sleep 0.2
 mv ./win_scp.png ./icon.png
 sleep 0.2
@@ -84,11 +85,11 @@ echo ""
 sleep 0.2
 echo "------------------------------------------------------"
 sleep 0.2
-echo "Package: "$packURL" - Has been downloaded."
+echo $colorstart "Package: "$packURL" - Has been downloaded."
 sleep 0.2
 echo "------------------------------------------------------"
 sleep 0.2
-echo "Starting Unzipping Archive: "$packURL
+echo $colorstart "Starting Unzipping Archive: "$packURL
 sleep 0.2
 echo "------------------------------------------------------"
 sleep 0.2
@@ -98,7 +99,7 @@ echo ""
 sleep 0.2
 echo "------------------------------------------------------"
 sleep 0.2
-echo "Package has been unzipped and is ready for Secondary Configuration."
+echo $colorstart "Package has been unzipped and is ready for Secondary Configuration."
 sleep 0.2
 echo "------------------------------------------------------"
 sleep 0.2
@@ -107,9 +108,9 @@ sleep 0.2
 echo "------------------------------------------------------"
 #### Create Secondary Configuration Files.
 DESKTOPFILE="/home/$USER/Desktop/LinSCP.desktop"
-PORTABLEFILE="/home/$USER/$WINDOWDIR/$PORTABLEDIR/LinSCP.xo"
+PORTABLEFILE="/home/$USER/$WINDOWDIR/$PORTABLEDIR/$APPDIR/LinSCP.xo"
 LAUNCHERFILE="/home/$USER/LinSCP.Launch"
-ICONFILE="/home/$USER/$WINDOWDIR/$PORTABLEDIR/icon.png"
+ICONFILE="/home/$USER/$WINDOWDIR/$PORTABLEDIR/$APPDIR/icon.png"
 sleep 0.2
 ## Create Executable File (Portable File)
 touch $PORTABLEFILE
@@ -118,15 +119,15 @@ chmod +x $PORTABLEFILE
 sleep 0.2
 echo "------------------------------------------------------"
 echo '#!/bin/bash' > "$PORTABLEFILE"
-echo 'echo "STARTING WINSCP (WINE)"' >> "$PORTABLEFILE"
+echo 'echo $colorstart "STARTING WINSCP (WINE)"' >> "$PORTABLEFILE"
 echo 'wine ./WinSCP.exe' >> "$PORTABLEFILE"
-echo 'echo "Program Finished"' >> "$PORTABLEFILE"
+echo 'echo $colorstart "Program Finished"' >> "$PORTABLEFILE"
 sleep 0.2
-echo "------------------------------------------------------"
+echo $colorstart "------------------------------------------------------"
 echo ""
 cat $PORTABLEFILE
 echo ""
-echo "------------------------------------------------------"
+echo $colorstart "------------------------------------------------------"
 sleep 0.2
 ## Create Executable File (Portable File)
 touch $LAUNCHERFILE
@@ -134,16 +135,16 @@ sleep 0.2
 chmod +x $LAUNCHERFILE
 sleep 0.2
 echo '#!/bin/bash' > "$LAUNCHERFILE"
-echo 'Dir="./Windows/Portable"' >> "$LAUNCHERFILE"
+echo 'Dir="./Windows/Portable/WinSCP/"' >> "$LAUNCHERFILE"
 echo 'cd $Dir' >> "$LAUNCHERFILE"
 echo 'File="LinSCP.xo"' >> "$LAUNCHERFILE"
 echo ' . $File ' >> "$LAUNCHERFILE"
 sleep 0.2
-echo "------------------------------------------------------"
+echo $colorstart "------------------------------------------------------"
 echo ""
 cat $LAUNCHERFILE
 echo ""
-echo "------------------------------------------------------"
+echo $colorstart "------------------------------------------------------"
 sleep 0.2
 XArg="[Desktop Entry]"
 XPath="/home/$USER/"
